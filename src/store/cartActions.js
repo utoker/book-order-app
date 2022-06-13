@@ -1,7 +1,8 @@
 import { showNotification } from "./uiSlice";
 import { replaceCart } from "./cartSlice";
-import config from "../config/config";
+
 export const sendCartData = (cart) => {
+  const {REACT_APP_URL} = process.env
   return async (dispatch) => {
     dispatch(
       showNotification({
@@ -11,7 +12,7 @@ export const sendCartData = (cart) => {
       })
     );
     const sendRequest = async () => {
-      const response = await fetch(`${config.FIREBASE_URL}/cart.json`, {
+      const response = await fetch(`${REACT_APP_URL}/cart.json`, {
         method: "PUT",
         body: JSON.stringify({
           items: cart.items,
@@ -44,6 +45,7 @@ export const sendCartData = (cart) => {
 };
 
 export const getCartData = (cart) => {
+  const {REACT_APP_URL} = process.env
   return async (dispatch) => {
     dispatch(
       showNotification({
@@ -53,7 +55,7 @@ export const getCartData = (cart) => {
       })
     );
     const getRequest = async () => {
-      const response = await fetch(`${config.FIREBASE_URL}/cart.json`);
+      const response = await fetch(`${REACT_APP_URL}/cart.json`);
       if (!response.ok) {
         throw new Error("sending cart data failed.");
       }
